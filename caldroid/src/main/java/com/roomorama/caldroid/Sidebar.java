@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -24,7 +25,7 @@ public class Sidebar extends View{
 	private Context context;
     private String[] sections;
     private  SideBarSelectListener sectionIndexer;
-    private int DP10PX = 10;
+    private int fontSizeInPx = 10;
     private  float rightMove = 3;
 
     public void initBar(SideBarSelectListener sectionIndexer, String[] sections , float rightMove)
@@ -46,10 +47,21 @@ public class Sidebar extends View{
         return (int)(dpValue * scale + 0.5f);
     }
 
+    /**
+     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
+     */
+    public static int px2dip(Context context, float pxValue)
+    {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int)(pxValue / scale + 0.5f);
+    }
+
 	public Sidebar(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
-        DP10PX = sp2px(context, DP10PX);
+        Log.e("XXXX", "" + context.getResources().getDimensionPixelSize(R.dimen.sidebar_width_height));
+        Log.e("XXXX", "" + px2dip(context,context.getResources().getDimension(R.dimen.sidebar_width_height)));
+        fontSizeInPx = context.getResources().getDimensionPixelSize(R.dimen.sidebar_width_height);
         init();
 	}
 
@@ -59,7 +71,7 @@ public class Sidebar extends View{
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.DKGRAY);
         paint.setTextAlign(Align.CENTER);
-        paint.setTextSize(DP10PX);
+        paint.setTextSize(fontSizeInPx);
         paint.setFakeBoldText(true);
         postInvalidate();
     }
@@ -76,11 +88,11 @@ public class Sidebar extends View{
             canvas.drawText(sections[0], center, getHeight() / 2, paint);
             return;
         }
-		int height = (getHeight() - DP10PX - DP10PX /3) / (sections.length-1);
+		int height = (getHeight() - fontSizeInPx - fontSizeInPx /3) / (sections.length-1);
         for (int i=0; i< sections.length; i++)
         {
             int y = height * i;
-            y+= DP10PX;
+            y+= fontSizeInPx;
             canvas.drawText(sections[i], center,  y, paint);
         }
 	}

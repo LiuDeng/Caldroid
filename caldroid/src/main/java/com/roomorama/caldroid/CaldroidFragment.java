@@ -1269,16 +1269,18 @@ public class CaldroidFragment extends DialogFragment {
             }
         }, new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}, 0);
 
+
         if (minDateTime != null && maxDateTime != null)
         {
+            int yearBetween = maxDateTime.getYear() - minDateTime.getYear();
+            final int yearIn = yearBetween > 12 ? 12:yearBetween;
             List<String> years = new ArrayList<String>();
-            for (int i=0 ; i<12 ;  i++)
+            for (int i=1 ; i<=yearIn ;  i++)
             {
-                DateTime date = minDateTime.plusDays(365 * i);
+                DateTime date = maxDateTime.minusDays(365 * (yearIn - i));
                 years.add(String.valueOf(date.getYear()).substring(2));
-                if (date.gteq(maxDateTime))
+                if (date.lteq(minDateTime))
                 {
-
                     break;
                 }
             }
@@ -1288,10 +1290,10 @@ public class CaldroidFragment extends DialogFragment {
                 yeahSidebar.initBar(new HorizonSidebar.SideBarSelectListener() {
                     @Override
                     public void onSelectIndex(int index) {
-                        DateTime date = minDateTime.plusDays(index * 365);
+                        DateTime date = maxDateTime.minusDays((yearIn-index - 1) * 365);
                         moveToDateTime(new DateTime(date.getYear(), month, 1, 0, 0, 0, 0));
                     }
-                }, years.toArray(new String[years.size()]), 5);
+                }, years.toArray(new String[years.size()]));
             }
         }
 

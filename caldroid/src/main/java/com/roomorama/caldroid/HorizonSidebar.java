@@ -24,15 +24,13 @@ public class HorizonSidebar extends View{
 	private Context context;
     private String[] sections;
     private  SideBarSelectListener sectionIndexer;
-    private int DP10PX = 10;
-    private int DP5PX = 5;
-    private  float topMove = 3;
-
-    public void initBar(SideBarSelectListener sectionIndexer, String[] sections , float rightMove)
+    private int fontSizeInPx = 10;
+    private int textPadding = 5;
+    private int textTopPadding = 0;
+    public void initBar(SideBarSelectListener sectionIndexer, String[] sections )
     {
         this.sectionIndexer = sectionIndexer;
         this.sections =sections;
-        this.topMove = rightMove;
         init();
     }
 
@@ -50,8 +48,9 @@ public class HorizonSidebar extends View{
 	public HorizonSidebar(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
-        DP10PX = sp2px(context, DP10PX);
-        DP5PX = sp2px(context, 5);
+        fontSizeInPx = context.getResources().getDimensionPixelSize(R.dimen.sidebar_width_height);
+        textPadding = context.getResources().getDimensionPixelSize(R.dimen.horizon_sidebar_padding);
+        textTopPadding = context.getResources().getDimensionPixelSize(R.dimen.horizon_sidebar_top_padding);
         init();
 	}
 
@@ -61,7 +60,7 @@ public class HorizonSidebar extends View{
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.DKGRAY);
         paint.setTextAlign(Align.CENTER);
-        paint.setTextSize(DP10PX);
+        paint.setTextSize(fontSizeInPx);
         paint.setFakeBoldText(true);
         postInvalidate();
     }
@@ -72,19 +71,16 @@ public class HorizonSidebar extends View{
 		super.onDraw(canvas);
         if (sections == null || sections.length == 0 )
             return;
-        int y = getHeight() / 2 + dip2px(context, topMove);;
+        int y = getHeight() / 2 + textTopPadding;
 
 
         int width = getWidth();
-        width -= DP5PX ;
+        width -= (2* textPadding) ;
         width = width/ (sections.length-1);
         for (int i=0; i< sections.length; i++)
         {
             int x = width * i;
-            if (i == 0)
-            {
-                x += DP5PX;
-            }
+            x += textPadding;
             canvas.drawText(sections[i], x,  y, paint);
         }
 	}

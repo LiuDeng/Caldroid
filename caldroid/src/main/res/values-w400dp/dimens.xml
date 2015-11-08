@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="sidebar_width_height">18dp</dimen>
+    <dimen name="horizon_sidebar_padding">10sp</dimen>
+    <dimen name="horizon_sidebar_top_padding">7sp</dimen>
+</resources>
