@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -13,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.format.DateUtils;
 import android.text.format.Time;
+import android.util.DisplayMetrics;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -1222,6 +1226,20 @@ public class CaldroidFragment extends DialogFragment {
         return origInflater.cloneInContext(wrapped);
     }
 
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                DisplayMetrics dm = new DisplayMetrics();
+                getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+                getDialog().getWindow().setLayout(dm.widthPixels, getDialog().getWindow().getAttributes().height);
+            }
+        });
+        return super.onCreateDialog(savedInstanceState);
+    }
+
     /**
      * Setup view
      */
@@ -1242,6 +1260,40 @@ public class CaldroidFragment extends DialogFragment {
         LayoutInflater localInflater = getLayoutInflater(getActivity(), inflater, themeResource);
 
         View view = localInflater.inflate(R.layout.calendar_view, container, false);
+
+        Sidebar monthSidebar = (Sidebar)view.findViewById(R.id.month_sidebar);
+        monthSidebar.initBar(new Sidebar.SideBarSelectListener() {
+            @Override
+            public void onSelectIndex(int index) {
+                moveToDateTime(new DateTime(year, index + 1, 1, 0, 0, 0, 0));
+            }
+        }, new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}, 0);
+
+        if (minDateTime != null && maxDateTime != null)
+        {
+            List<String> years = new ArrayList<String>();
+            for (int i=0 ; i<12 ;  i++)
+            {
+                DateTime date = minDateTime.plusDays(365 * i);
+                years.add(String.valueOf(date.getYear()).substring(2));
+                if (date.gteq(maxDateTime))
+                {
+
+                    break;
+                }
+            }
+            if (years.size() > 1) {
+                HorizonSidebar yeahSidebar = (HorizonSidebar) view.findViewById(R.id.year_sidebar);
+                yeahSidebar.setVisibility(View.VISIBLE);
+                yeahSidebar.initBar(new HorizonSidebar.SideBarSelectListener() {
+                    @Override
+                    public void onSelectIndex(int index) {
+                        DateTime date = minDateTime.plusDays(index * 365);
+                        moveToDateTime(new DateTime(date.getYear(), month, 1, 0, 0, 0, 0));
+                    }
+                }, years.toArray(new String[years.size()]), 5);
+            }
+        }
 
         // For the monthTitleTextView
         monthTitleTextView = (TextView) view

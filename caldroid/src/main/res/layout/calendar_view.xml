@@ -1,41 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    style="?styleCaldroidViewLayout"
-    android:orientation="vertical" >
+    android:layout_height="match_parent"
+    >
 
     <LinearLayout
-        android:id="@+id/calendar_title_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:paddingRight="13dp"
+        android:id="@+id/calendar_main_linear"
+        style="?styleCaldroidViewLayout"
+        android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/calendar_left_arrow"
-            style="?styleCaldroidLeftArrow" />
+        <LinearLayout
+            android:id="@+id/calendar_title_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/calendar_month_year_textview"
-            style="?styleCaldroidMonthName"/>
+            <Button
+                android:id="@+id/calendar_left_arrow"
+                style="?styleCaldroidLeftArrow" />
 
-        <Button
-            android:id="@+id/calendar_right_arrow"
-            style="?styleCaldroidRightArrow" />
+            <TextView
+                android:id="@+id/calendar_month_year_textview"
+                style="?styleCaldroidMonthName"/>
+
+            <Button
+                android:id="@+id/calendar_right_arrow"
+                style="?styleCaldroidRightArrow" />
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/weekday_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-10dp"
+            android:numColumns="7"
+            android:stretchMode="columnWidth" >
+        </GridView>
+
+        <com.antonyt.infiniteviewpager.InfiniteViewPager
+            android:id="@+id/months_infinite_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.roomorama.caldroid.HorizonSidebar
+            android:id="@+id/year_sidebar"
+            android:layout_width="match_parent"
+            android:layout_height="13dp"
+            android:background="@android:color/transparent"
+            android:visibility="gone"
+            android:clickable="true"
+        />
+
     </LinearLayout>
 
-    <GridView
-        android:id="@+id/weekday_gridview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-10dp"
-        android:numColumns="7"
-        android:stretchMode="columnWidth" >
-    </GridView>
+    <com.roomorama.caldroid.Sidebar
+        android:id="@+id/month_sidebar"
+        android:layout_width="13dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="13dp"
+        android:layout_alignBottom="@id/calendar_main_linear"
+        android:background="@android:color/transparent"
+        android:clickable="true" />
 
-    <com.antonyt.infiniteviewpager.InfiniteViewPager
-        android:id="@+id/months_infinite_pager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-</LinearLayout>
+</RelativeLayout>
