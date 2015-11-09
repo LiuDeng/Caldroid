@@ -18,11 +18,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import hirondelle.date4j.DateTime;
+
 @SuppressLint("SimpleDateFormat")
 public class CaldroidSampleActivity extends AppCompatActivity {
     private boolean undo = false;
     private CaldroidFragment caldroidFragment;
-    private CaldroidFragment dialogCaldroidFragment;
+    private CaldroidFragment mDialogCaldroidFragment;
 
     private void setCustomResourceForDates() {
         Calendar cal = Calendar.getInstance();
@@ -230,30 +232,35 @@ public class CaldroidSampleActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // Setup caldroid to use as dialog
-                dialogCaldroidFragment = new CaldroidFragment();
-                dialogCaldroidFragment.setCaldroidListener(listener);
 
-                // If activity is recovered from rotation
-                final String dialogTag = "CALDROID_DIALOG_FRAGMENT";
-                if (state != null) {
-                    dialogCaldroidFragment.restoreDialogStatesFromKey(
-                            getSupportFragmentManager(), state,
-                            "DIALOG_CALDROID_SAVED_STATE", dialogTag);
-                    Bundle args = dialogCaldroidFragment.getArguments();
-                    if (args == null) {
-                        args = new Bundle();
-                        dialogCaldroidFragment.setArguments(args);
+// Setup listener
+                final CaldroidListener listener = new CaldroidListener() {
+                    @Override
+                    public void onSelectDate(Date date, View view) {
+                        mDialogCaldroidFragment.dismiss();
                     }
-                } else {
-                    // Setup arguments
-                    Bundle bundle = new Bundle();
-                    // Setup dialogTitle
-                    dialogCaldroidFragment.setArguments(bundle);
-                }
+                    @Override
+                    public void onCaldroidViewCreated() {
+                        super.onCaldroidViewCreated();
+                    }
+                };
+                Date selectedDate = new Date();
+                mDialogCaldroidFragment = new CaldroidFragment();
+                mDialogCaldroidFragment.setCaldroidListener(listener);
 
-                dialogCaldroidFragment.show(getSupportFragmentManager(),
-                        dialogTag);
+                Bundle args = new Bundle();
+                args.putInt(CaldroidFragment.MONTH, selectedDate.getMonth() + 1);
+
+                args.putInt(CaldroidFragment.YEAR, selectedDate.getYear() + 1900);
+
+                mDialogCaldroidFragment.setArguments(args);
+
+                Date minDate = new Date(2000-1900,1,1);
+                Date maxDate = selectedDate;
+                mDialogCaldroidFragment.setMinDate(minDate);
+                mDialogCaldroidFragment.setMaxDate(maxDate);
+                mDialogCaldroidFragment.setSelectedDates(selectedDate, selectedDate);
+                mDialogCaldroidFragment.show(getSupportFragmentManager(), "");
             }
         });
     }
@@ -270,8 +277,8 @@ public class CaldroidSampleActivity extends AppCompatActivity {
             caldroidFragment.saveStatesToKey(outState, "CALDROID_SAVED_STATE");
         }
 
-        if (dialogCaldroidFragment != null) {
-            dialogCaldroidFragment.saveStatesToKey(outState,
+        if (mDialogCaldroidFragment != null) {
+            mDialogCaldroidFragment.saveStatesToKey(outState,
                     "DIALOG_CALDROID_SAVED_STATE");
         }
     }
