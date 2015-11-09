@@ -59,7 +59,7 @@ public class HorizonSidebar extends View{
     {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         if (isLightMode) {
-            paint.setColor(Color.DKGRAY);
+            paint.setColor(Color.GRAY);
         }
         else
         {
