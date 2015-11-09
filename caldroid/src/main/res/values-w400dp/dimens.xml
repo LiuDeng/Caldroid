@@ -1,4 +1,5 @@
 <resources>
+    <dimen name="calendar_view_pager_margin_right">-2dp</dimen>
     <dimen name="sidebar_width_height">18dp</dimen>
     <dimen name="horizon_sidebar_padding">10sp</dimen>
     <dimen name="horizon_sidebar_top_padding">7sp</dimen>
