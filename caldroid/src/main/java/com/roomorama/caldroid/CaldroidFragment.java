@@ -129,6 +129,7 @@ public class CaldroidFragment extends DialogFragment {
     private ArrayList<DateGridFragment> fragments;
 
     private int themeResource = R.style.CaldroidDefault;
+    private boolean isLightMode = true;
 
     /**
      * Initial params key
@@ -1213,8 +1214,26 @@ public class CaldroidFragment extends DialogFragment {
         super.onDestroyView();
     }
 
-    public void setThemeResource(int id) {
+    public void setThemeResource(int id, boolean isLightMode) {
+        Bundle args = getArguments();
+        if (args == null)
+        {
+            args = new Bundle();
+        }
+        args.putInt(THEME_RESOURCE, id);
+        setArguments(args);
         themeResource = id;
+        this.isLightMode = isLightMode;
+    }
+
+    public void setDefaultLightMode()
+    {
+        setThemeResource(R.style.CaldroidDefault,true);
+    }
+
+    public void setDefaultDarkMode()
+    {
+        setThemeResource(R.style.CaldroidDefaultDark,false);
     }
 
     public int getThemeResource() {
@@ -1267,7 +1286,7 @@ public class CaldroidFragment extends DialogFragment {
             public void onSelectIndex(int index) {
                 moveToDateTime(new DateTime(year, index + 1, 1, 0, 0, 0, 0));
             }
-        }, new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}, 0);
+        }, new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}, isLightMode);
 
 
         if (minDateTime != null && maxDateTime != null)
@@ -1293,7 +1312,7 @@ public class CaldroidFragment extends DialogFragment {
                         DateTime date = maxDateTime.minusDays((yearIn-index - 1) * 365);
                         moveToDateTime(new DateTime(date.getYear(), month, 1, 0, 0, 0, 0));
                     }
-                }, years.toArray(new String[years.size()]));
+                }, years.toArray(new String[years.size()]),isLightMode);
             }
         }
 

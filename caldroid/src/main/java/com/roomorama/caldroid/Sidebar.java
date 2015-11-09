@@ -26,14 +26,12 @@ public class Sidebar extends View{
     private String[] sections;
     private  SideBarSelectListener sectionIndexer;
     private int fontSizeInPx = 10;
-    private  float rightMove = 3;
 
-    public void initBar(SideBarSelectListener sectionIndexer, String[] sections , float rightMove)
+    public void initBar(SideBarSelectListener sectionIndexer, String[] sections , boolean isLightMode)
     {
         this.sectionIndexer = sectionIndexer;
         this.sections =sections;
-        this.rightMove = rightMove;
-        init();
+        init(isLightMode);
     }
 
     public static int sp2px(Context context, float spValue) {
@@ -59,17 +57,21 @@ public class Sidebar extends View{
 	public Sidebar(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
-        Log.e("XXXX", "" + context.getResources().getDimensionPixelSize(R.dimen.sidebar_width_height));
-        Log.e("XXXX", "" + px2dip(context,context.getResources().getDimension(R.dimen.sidebar_width_height)));
         fontSizeInPx = context.getResources().getDimensionPixelSize(R.dimen.sidebar_width_height);
-        init();
+        init(true);
 	}
 
 
-    void  init()
+    void  init(boolean isLightMode)
     {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(Color.DKGRAY);
+        if (isLightMode) {
+            paint.setColor(Color.DKGRAY);
+        }
+        else
+        {
+            paint.setColor(Color.LTGRAY);
+        }
         paint.setTextAlign(Align.CENTER);
         paint.setTextSize(fontSizeInPx);
         paint.setFakeBoldText(true);
@@ -82,7 +84,7 @@ public class Sidebar extends View{
 		super.onDraw(canvas);
         if (sections == null || sections.length == 0 )
             return;
-        float center = getWidth() / 2 + dip2px(context, rightMove);
+        float center = getWidth() / 2;
         if (sections.length-1 == 0)
         {
             canvas.drawText(sections[0], center, getHeight() / 2, paint);

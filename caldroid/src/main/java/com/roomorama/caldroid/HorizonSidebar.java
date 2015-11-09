@@ -27,11 +27,11 @@ public class HorizonSidebar extends View{
     private int fontSizeInPx = 10;
     private int textPadding = 5;
     private int textTopPadding = 0;
-    public void initBar(SideBarSelectListener sectionIndexer, String[] sections )
+    public void initBar(SideBarSelectListener sectionIndexer, String[] sections ,boolean isLightMode)
     {
         this.sectionIndexer = sectionIndexer;
         this.sections =sections;
-        init();
+        init(isLightMode);
     }
 
     public static int sp2px(Context context, float spValue) {
@@ -51,14 +51,20 @@ public class HorizonSidebar extends View{
         fontSizeInPx = context.getResources().getDimensionPixelSize(R.dimen.sidebar_width_height);
         textPadding = context.getResources().getDimensionPixelSize(R.dimen.horizon_sidebar_padding);
         textTopPadding = context.getResources().getDimensionPixelSize(R.dimen.horizon_sidebar_top_padding);
-        init();
+        init(true);
 	}
 
 
-    void  init()
+    void  init(boolean isLightMode)
     {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(Color.DKGRAY);
+        if (isLightMode) {
+            paint.setColor(Color.DKGRAY);
+        }
+        else
+        {
+            paint.setColor(Color.LTGRAY);
+        }
         paint.setTextAlign(Align.CENTER);
         paint.setTextSize(fontSizeInPx);
         paint.setFakeBoldText(true);
