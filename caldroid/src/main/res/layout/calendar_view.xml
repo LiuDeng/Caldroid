@@ -44,6 +44,7 @@
         <com.antonyt.infiniteviewpager.InfiniteViewPager
             android:id="@+id/months_infinite_pager"
             android:layout_width="match_parent"
+            android:layout_marginRight="-2dp"
             android:layout_height="match_parent"/>
 
         <com.roomorama.caldroid.HorizonSidebar
