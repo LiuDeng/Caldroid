@@ -10,17 +10,17 @@
     <color name="caldroid_darker_gray">#aaa</color>
     <color name="caldroid_middle_gray">#888</color>
     <!-- A light Holo shade of blue -->
-    <color name="caldroid_holo_blue_light">#ff33b5e5</color>
+    <color name="caldroid_holo_blue_light">@color/wechat_green</color>
     <!-- A dark Holo shade of blue -->
-    <color name="caldroid_holo_blue_dark">#ff0099cc</color>
+    <color name="caldroid_holo_blue_dark">@color/wechat_green</color>
     <!-- A really bright Holo shade of blue -->
-    <color name="caldroid_sky_blue">#FFA3E8F7</color>
+    <color name="caldroid_sky_blue">@color/wechat_green</color>
 
     <color name="caldroid_333">#333</color>
     <color name="caldroid_555">#555</color>
     <color name="caldroid_light_red">#ff7f7f</color>
 
     <color name="bg_showcase">#aa000000</color>
-    <color name="wechat_green">#10D21C</color>
+    <color name="wechat_green">#45c01a</color>
 
 </resources>
