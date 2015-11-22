@@ -141,7 +141,7 @@ public class CaldroidSampleActivity extends AppCompatActivity {
         final TextView textView = (TextView) findViewById(R.id.textview);
 
         final Button customizeButton = (Button) findViewById(R.id.customize_button);
-
+        //showDialog();
         // Customize the calendar
         customizeButton.setOnClickListener(new OnClickListener() {
 
@@ -232,39 +232,43 @@ public class CaldroidSampleActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
-// Setup listener
-                final CaldroidListener listener = new CaldroidListener() {
-                    @Override
-                    public void onSelectDate(Date date, View view) {
-                        mDialogCaldroidFragment.dismiss();
-                    }
-                    @Override
-                    public void onCaldroidViewCreated() {
-                        super.onCaldroidViewCreated();
-                    }
-                };
-                Date selectedDate = new Date();
-                mDialogCaldroidFragment = new CaldroidFragment();
-                mDialogCaldroidFragment.setCaldroidListener(listener);
-
-                Bundle args = new Bundle();
-                args.putInt(CaldroidFragment.MONTH, selectedDate.getMonth() + 1);
-
-                args.putInt(CaldroidFragment.YEAR, selectedDate.getYear() + 1900);
-
-                mDialogCaldroidFragment.setArguments(args);
-
-                Date minDate = new Date(2000-1900,1,1);
-                Date maxDate = selectedDate;
-                mDialogCaldroidFragment.setMinDate(minDate);
-                mDialogCaldroidFragment.setMaxDate(maxDate);
-                mDialogCaldroidFragment.setSelectedDates(selectedDate, selectedDate);
-                mDialogCaldroidFragment.show(getSupportFragmentManager(), "");
+                showDialog();
             }
         });
     }
 
+    void  showDialog()
+    {
+        // Setup listener
+        final CaldroidListener listener = new CaldroidListener() {
+            @Override
+            public void onSelectDate(Date date, View view) {
+                mDialogCaldroidFragment.dismiss();
+            }
+            @Override
+            public void onCaldroidViewCreated() {
+                super.onCaldroidViewCreated();
+            }
+        };
+        Date selectedDate = new Date();
+        mDialogCaldroidFragment = new CaldroidFragment();
+        mDialogCaldroidFragment.setCaldroidListener(listener);
+
+        Bundle args = new Bundle();
+        args.putInt(CaldroidFragment.MONTH, selectedDate.getMonth() + 1);
+
+        args.putInt(CaldroidFragment.YEAR, selectedDate.getYear() + 1900);
+
+        mDialogCaldroidFragment.setArguments(args);
+
+        Date minDate = new Date(2000-1900,1,1);
+        Date maxDate = selectedDate;
+        //mDialogCaldroidFragment.setDefaultDarkMode();
+        mDialogCaldroidFragment.setMinDate(minDate);
+        mDialogCaldroidFragment.setMaxDate(maxDate);
+        mDialogCaldroidFragment.setSelectedDates(selectedDate, selectedDate);
+        mDialogCaldroidFragment.show(getSupportFragmentManager(), "");
+    }
     /**
      * Save current states of the Caldroid here
      */
