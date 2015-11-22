@@ -69,4 +69,17 @@
         android:background="@android:color/transparent"
         android:clickable="true" />
 
+    <include layout="@layout/month_year_bar_hint"
+        android:id="@+id/month_year_hint"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignRight="@id/calendar_main_linear"
+        android:layout_alignBottom="@id/calendar_main_linear"
+        android:layout_marginBottom="@dimen/sidebar_width_height"
+        android:layout_marginRight="@dimen/sidebar_width_height"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        />
+
 </RelativeLayout>

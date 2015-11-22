@@ -20,4 +20,7 @@
     <color name="caldroid_555">#555</color>
     <color name="caldroid_light_red">#ff7f7f</color>
 
+    <color name="bg_showcase">#aa000000</color>
+    <color name="wechat_green">#10D21C</color>
+
 </resources>

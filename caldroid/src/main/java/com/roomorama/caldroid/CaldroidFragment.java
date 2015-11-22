@@ -3,11 +3,13 @@ package com.roomorama.caldroid;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -1279,6 +1281,22 @@ public class CaldroidFragment extends DialogFragment {
         LayoutInflater localInflater = getLayoutInflater(getActivity(), inflater, themeResource);
 
         View view = localInflater.inflate(R.layout.calendar_view, container, false);
+
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        final String key = "haveGetHint";
+        if (!sp.getBoolean(key,false))
+        {
+            final  View hintView = view.findViewById(R.id.month_year_hint);
+            hintView.setVisibility(View.VISIBLE);
+            hintView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    hintView.setVisibility(View.GONE);
+                    sp.edit().putBoolean(key,true).commit();
+                }
+            });
+
+        }
 
         Sidebar monthSidebar = (Sidebar)view.findViewById(R.id.month_sidebar);
         monthSidebar.initBar(new Sidebar.SideBarSelectListener() {

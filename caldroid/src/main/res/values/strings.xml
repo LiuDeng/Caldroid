@@ -1,5 +1,7 @@
 <resources>
 
     <string name="app_name">CalendarFragment</string>
-
+    <string name="month_bar_hint">右侧快速切换月</string>
+    <string name="year_bar_hint">底部快速切换年</string>
+    <string name="get_hint">我知道了！</string>
 </resources>
