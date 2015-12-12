@@ -80,7 +80,7 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 		// Customize for selected dates
 		if (selectedDates != null && selectedDates.indexOf(dateTime) != -1) {
 			cellView.setBackgroundColor(resources
-					.getColor(com.caldroid.R.color.caldroid_sky_blue));
+					.getColor(com.caldroid.R.color.caldroid_select_back));
 
 			tv1.setTextColor(Color.BLACK);
 
@@ -91,7 +91,7 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 		if (shouldResetDiabledView && shouldResetSelectedView) {
 			// Customize for today
 			if (dateTime.equals(getToday())) {
-				cellView.setBackgroundResource(com.caldroid.R.drawable.red_border);
+				cellView.setBackgroundResource(com.caldroid.R.drawable.today_back);
 			} else {
 				cellView.setBackgroundResource(com.caldroid.R.drawable.cell_bg);
 			}

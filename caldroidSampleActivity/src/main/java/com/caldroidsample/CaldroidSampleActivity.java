@@ -126,11 +126,7 @@ public class CaldroidSampleActivity extends AppCompatActivity {
 
             @Override
             public void onCaldroidViewCreated() {
-                if (caldroidFragment.getLeftArrowButton() != null) {
-                    Toast.makeText(getApplicationContext(),
-                            "Caldroid view is created", Toast.LENGTH_SHORT)
-                            .show();
-                }
+
             }
 
         };
@@ -156,7 +152,6 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                     caldroidFragment.clearSelectedDates();
                     caldroidFragment.setMinDate(null);
                     caldroidFragment.setMaxDate(null);
-                    caldroidFragment.setShowNavigationArrows(true);
                     caldroidFragment.setEnableSwipe(true);
                     caldroidFragment.refreshView();
                     undo = false;
@@ -201,7 +196,6 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                 caldroidFragment.setMaxDate(maxDate);
                 caldroidFragment.setDisableDates(disabledDates);
                 caldroidFragment.setSelectedDates(fromDate, toDate);
-                caldroidFragment.setShowNavigationArrows(false);
                 caldroidFragment.setEnableSwipe(false);
 
                 caldroidFragment.refreshView();
@@ -237,6 +231,8 @@ public class CaldroidSampleActivity extends AppCompatActivity {
         });
     }
 
+    int launchCount = 0;
+
     void  showDialog()
     {
         // Setup listener
@@ -258,6 +254,16 @@ public class CaldroidSampleActivity extends AppCompatActivity {
         args.putInt(CaldroidFragment.MONTH, selectedDate.getMonth() + 1);
 
         args.putInt(CaldroidFragment.YEAR, selectedDate.getYear() + 1900);
+
+        launchCount ++;
+        if (launchCount % 2 == 0) {
+            args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
+            mDialogCaldroidFragment.setDefaultDarkMode();
+        }
+        else {
+            args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefault);
+            mDialogCaldroidFragment.setDefaultLightMode();
+        }
 
         mDialogCaldroidFragment.setArguments(args);
 

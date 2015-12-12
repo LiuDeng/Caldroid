@@ -19,6 +19,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.format.DateUtils;
 import android.text.format.Time;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -122,8 +123,6 @@ public class CaldroidFragment extends DialogFragment {
     /**
      * Caldroid view components
      */
-    private Button leftArrowButton;
-    private Button rightArrowButton;
     private TextView monthTitleTextView;
     private GridView weekdayGridView;
     private InfiniteViewPager dateViewPager;
@@ -140,7 +139,6 @@ public class CaldroidFragment extends DialogFragment {
             DIALOG_TITLE = "dialogTitle",
             MONTH = "month",
             YEAR = "year",
-            SHOW_NAVIGATION_ARROWS = "showNavigationArrows",
             DISABLE_DATES = "disableDates",
             SELECTED_DATES = "selectedDates",
             MIN_DATE = "minDate",
@@ -149,7 +147,6 @@ public class CaldroidFragment extends DialogFragment {
             START_DAY_OF_WEEK = "startDayOfWeek",
             SIX_WEEKS_IN_CALENDAR = "sixWeeksInCalendar",
             ENABLE_CLICK_ON_DISABLED_DATES = "enableClickOnDisabledDates",
-            SQUARE_TEXT_VIEW_CELL = "squareTextViewCell",
             THEME_RESOURCE = "themeResource";
 
     /**
@@ -214,7 +211,6 @@ public class CaldroidFragment extends DialogFragment {
      * To control the navigation
      */
     protected boolean enableSwipe = true;
-    protected boolean showNavigationArrows = true;
     protected boolean enableClickOnDisabledDates = false;
 
     /**
@@ -316,16 +312,7 @@ public class CaldroidFragment extends DialogFragment {
         return textColorForDateTimeMap;
     }
 
-    /**
-     * To let user customize the navigation buttons
-     */
-    public Button getLeftArrowButton() {
-        return leftArrowButton;
-    }
 
-    public Button getRightArrowButton() {
-        return rightArrowButton;
-    }
 
     /**
      * To let client customize month title textview
@@ -362,7 +349,6 @@ public class CaldroidFragment extends DialogFragment {
         caldroidData.put(START_DAY_OF_WEEK, Integer.valueOf(startDayOfWeek));
         caldroidData.put(SIX_WEEKS_IN_CALENDAR,
                 Boolean.valueOf(sixWeeksInCalendar));
-        caldroidData.put(SQUARE_TEXT_VIEW_CELL, squareTextViewCell);
         caldroidData.put(THEME_RESOURCE, themeResource);
 
 
@@ -530,7 +516,6 @@ public class CaldroidFragment extends DialogFragment {
             bundle.putString(MAX_DATE, maxDateTime.format("YYYY-MM-DD"));
         }
 
-        bundle.putBoolean(SHOW_NAVIGATION_ARROWS, showNavigationArrows);
         bundle.putBoolean(ENABLE_SWIPE, enableSwipe);
         bundle.putInt(START_DAY_OF_WEEK, startDayOfWeek);
         bundle.putBoolean(SIX_WEEKS_IN_CALENDAR, sixWeeksInCalendar);
@@ -834,30 +819,8 @@ public class CaldroidFragment extends DialogFragment {
         return selectedDates.contains(dateTime);
     }
 
-    /**
-     * Check if the navigation arrow is shown
-     *
-     * @return
-     */
-    public boolean isShowNavigationArrows() {
-        return showNavigationArrows;
-    }
 
-    /**
-     * Show or hide the navigation arrows
-     *
-     * @param showNavigationArrows
-     */
-    public void setShowNavigationArrows(boolean showNavigationArrows) {
-        this.showNavigationArrows = showNavigationArrows;
-        if (showNavigationArrows) {
-            leftArrowButton.setVisibility(View.VISIBLE);
-            rightArrowButton.setVisibility(View.VISIBLE);
-        } else {
-            leftArrowButton.setVisibility(View.INVISIBLE);
-            rightArrowButton.setVisibility(View.INVISIBLE);
-        }
-    }
+
 
     /**
      * Enable / Disable swipe to navigate different months
@@ -1107,9 +1070,6 @@ public class CaldroidFragment extends DialogFragment {
                 startDayOfWeek = startDayOfWeek % 7;
             }
 
-            // Should show arrow
-            showNavigationArrows = args
-                    .getBoolean(SHOW_NAVIGATION_ARROWS, true);
 
             // Should enable swipe to change month
             enableSwipe = args.getBoolean(ENABLE_SWIPE, true);
@@ -1117,14 +1077,6 @@ public class CaldroidFragment extends DialogFragment {
             // Get sixWeeksInCalendar
             sixWeeksInCalendar = args.getBoolean(SIX_WEEKS_IN_CALENDAR, true);
 
-            // Get squareTextViewCell, by default, use square cell in portrait mode
-            // and using normal cell in landscape mode
-            int orientation = getResources().getConfiguration().orientation;
-            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                squareTextViewCell = args.getBoolean(SQUARE_TEXT_VIEW_CELL, true);
-            } else {
-                squareTextViewCell = args.getBoolean(SQUARE_TEXT_VIEW_CELL, false);
-            }
 
             // Get clickable setting
             enableClickOnDisabledDates = args.getBoolean(
@@ -1338,31 +1290,6 @@ public class CaldroidFragment extends DialogFragment {
         monthTitleTextView = (TextView) view
                 .findViewById(R.id.calendar_month_year_textview);
 
-        // For the left arrow button
-        leftArrowButton = (Button) view.findViewById(R.id.calendar_left_arrow);
-        rightArrowButton = (Button) view
-                .findViewById(R.id.calendar_right_arrow);
-
-        // Navigate to previous month when user click
-        leftArrowButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                prevMonth();
-            }
-        });
-
-        // Navigate to next month when user click
-        rightArrowButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                nextMonth();
-            }
-        });
-
-        // Show navigation arrows depend on initial arguments
-        setShowNavigationArrows(showNavigationArrows);
 
         // For the weekday gridview ("SUN, MON, TUE, WED, THU, FRI, SAT")
         weekdayGridView = (GridView) view.findViewById(R.id.weekday_gridview);

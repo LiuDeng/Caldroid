@@ -8,7 +8,18 @@
         android:top="0dp">
         <shape android:shape="rectangle" >
 
-            <solid android:color="#FF4081" />
+            <solid android:color="@color/caldroid_black" />
+        </shape>
+    </item>
+
+    <item
+        android:bottom="2dp"
+        android:left="3dp"
+        android:right="4dp"
+        android:top="2dp">
+        <shape android:shape="oval" >
+
+            <solid android:color="@color/caldroid_light_red" />
         </shape>
     </item>
 

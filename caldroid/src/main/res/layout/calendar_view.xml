@@ -5,69 +5,75 @@
     android:layout_height="match_parent"
     >
 
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="@dimen/sidebar_width_height"
         android:id="@+id/calendar_main_linear"
         style="?styleCaldroidViewLayout"
         android:orientation="vertical" >
 
         <LinearLayout
-            android:id="@+id/calendar_title_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/calendar_left_arrow"
-                style="?styleCaldroidLeftArrow" />
+            android:orientation="vertical"
+            android:background="#3F51B5"
+            >
 
             <TextView
                 android:id="@+id/calendar_month_year_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 style="?styleCaldroidMonthName"/>
 
-            <Button
-                android:id="@+id/calendar_right_arrow"
-                style="?styleCaldroidRightArrow" />
+            <GridView
+                android:id="@+id/weekday_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="7"
+                android:stretchMode="columnWidth" >
+            </GridView>
+
         </LinearLayout>
 
-        <GridView
-            android:id="@+id/weekday_gridview"
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-10dp"
-            android:numColumns="7"
-            android:stretchMode="columnWidth" >
-        </GridView>
+            >
 
-        <com.antonyt.infiniteviewpager.InfiniteViewPager
-            android:id="@+id/months_infinite_pager"
-            android:layout_width="match_parent"
-            android:layout_marginRight="@dimen/calendar_view_pager_margin_right"
-            android:layout_height="match_parent"/>
+            <com.antonyt.infiniteviewpager.InfiniteViewPager
+                android:id="@+id/months_infinite_pager"
+                android:layout_width="match_parent"
+                android:layout_marginRight="@dimen/sidebar_width_height"
+                android:layout_height="match_parent"/>
+
+            <com.roomorama.caldroid.Sidebar
+                android:id="@+id/month_sidebar"
+                android:layout_width="@dimen/sidebar_width_height"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:layout_alignTop="@id/months_infinite_pager"
+                android:layout_alignBottom="@id/months_infinite_pager"
+                android:layout_alignParentRight="true"
+                android:clickable="true" />
+
+        </RelativeLayout>
+
 
         <com.roomorama.caldroid.HorizonSidebar
             android:id="@+id/year_sidebar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sidebar_width_height"
             android:background="@android:color/transparent"
+            android:layout_marginRight="@dimen/sidebar_width_height"
             android:visibility="gone"
             android:clickable="true"
         />
 
     </LinearLayout>
 
-    <com.roomorama.caldroid.Sidebar
-        android:id="@+id/month_sidebar"
-        android:layout_width="@dimen/sidebar_width_height"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="@dimen/sidebar_width_height"
-        android:layout_alignBottom="@id/calendar_main_linear"
-        android:background="@android:color/transparent"
-        android:clickable="true" />
+
 
     <include layout="@layout/month_year_bar_hint"
         android:id="@+id/month_year_hint"

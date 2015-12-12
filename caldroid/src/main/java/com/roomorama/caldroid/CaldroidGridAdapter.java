@@ -43,7 +43,6 @@ public class CaldroidGridAdapter extends BaseAdapter {
     protected DateTime today;
     protected int startDayOfWeek;
     protected boolean sixWeeksInCalendar;
-    protected boolean squareTextViewCell;
     protected int themeResource;
     protected Resources resources;
 
@@ -181,8 +180,6 @@ public class CaldroidGridAdapter extends BaseAdapter {
                 .get(CaldroidFragment.START_DAY_OF_WEEK);
         sixWeeksInCalendar = (Boolean) caldroidData
                 .get(CaldroidFragment.SIX_WEEKS_IN_CALENDAR);
-        squareTextViewCell = (Boolean) caldroidData
-                .get(CaldroidFragment.SQUARE_TEXT_VIEW_CELL);
 
         // Get theme
         themeResource = (Integer) caldroidData
@@ -202,11 +199,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
         // Get style of normal cell or square cell in the theme
         Resources.Theme theme = wrapped.getTheme();
         TypedValue styleCellVal = new TypedValue();
-        if (squareTextViewCell) {
-            theme.resolveAttribute(R.attr.styleCaldroidSquareCell, styleCellVal, true);
-        } else {
-            theme.resolveAttribute(R.attr.styleCaldroidNormalCell, styleCellVal, true);
-        }
+        theme.resolveAttribute(R.attr.styleCaldroidNormalCell, styleCellVal, true);
 
         // Get default background of cell
         TypedArray typedArray = wrapped.obtainStyledAttributes(styleCellVal.data, R.styleable.Cell);
@@ -340,20 +333,20 @@ public class CaldroidGridAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        CellView cellView = (CellView) convertView;
+
+        View cellView = null;
 
         LayoutInflater localInflater = CaldroidFragment.getLayoutInflater(context, inflater, themeResource);
 
         // For reuse
-        if (convertView == null) {
-            if (squareTextViewCell) {
-                cellView = (CellView) localInflater.inflate(R.layout.square_date_cell, null);
-            } else {
-                cellView = (CellView) localInflater.inflate(R.layout.normal_date_cell, null);
-            }
-        }
 
-        customizeTextView(position, cellView);
+        if (convertView == null) {
+            cellView = localInflater.inflate(R.layout.normal_date_cell, null);
+        }
+        else
+            cellView = convertView;
+
+        customizeTextView(position,(CellView)cellView.findViewById(R.id.calendar_tv));
 
         return cellView;
     }

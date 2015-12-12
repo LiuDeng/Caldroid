@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="text_main_black">#dd000000</color>
+    <color name="text_secondary_black">#7d000000</color>
+    <color name="text_diable_black">#60000000</color>
+
+    <color name="text_main_white">#ffffff</color>
+    <color name="text_secondary_white">#b2ffffff</color>
+    <color name="text_diable_white">#4cffffff</color>
+
     <color name="caldroid_white">#FFFFFF</color>
     <color name="caldroid_black">#000000</color>
     <color name="caldroid_transparent">#00000000</color>
     <!-- For settings framework -->
-    <color name="caldroid_lighter_gray">#ddd</color>
-    <color name="caldroid_gray">#CCC</color>
-    <color name="caldroid_darker_gray">#aaa</color>
-    <color name="caldroid_middle_gray">#888</color>
-    <!-- A light Holo shade of blue -->
-    <color name="caldroid_holo_blue_light">@color/wechat_green</color>
-    <!-- A dark Holo shade of blue -->
-    <color name="caldroid_holo_blue_dark">@color/wechat_green</color>
-    <!-- A really bright Holo shade of blue -->
-    <color name="caldroid_sky_blue">@color/wechat_green</color>
+    <color name="caldroid_lighter_gray">#EEEEEE</color>
+    <color name="caldroid_gray">#E0E0E0</color>
+    <color name="caldroid_darker_gray">#BDBDBD</color>
+    <color name="caldroid_middle_gray">#9E9E9E</color>
 
     <color name="caldroid_333">#333</color>
     <color name="caldroid_555">#555</color>
-    <color name="caldroid_light_red">#ff7f7f</color>
+    <color name="caldroid_light_red">#FF4081</color>
+    <color name="caldroid_select_back">#3F51B5</color>
 
     <color name="bg_showcase">#aa000000</color>
-    <color name="wechat_green">#45c01a</color>
 
 </resources>

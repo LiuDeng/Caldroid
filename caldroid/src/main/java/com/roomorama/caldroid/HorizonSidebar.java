@@ -59,15 +59,14 @@ public class HorizonSidebar extends View{
     {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         if (isLightMode) {
-            paint.setColor(Color.GRAY);
+            paint.setColor(getResources().getColor(R.color.text_diable_black));
         }
         else
         {
-            paint.setColor(Color.LTGRAY);
+            paint.setColor(getResources().getColor(R.color.text_secondary_white));
         }
         paint.setTextAlign(Align.CENTER);
         paint.setTextSize(fontSizeInPx);
-        paint.setFakeBoldText(true);
         postInvalidate();
     }
 
