@@ -221,7 +221,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
     @SuppressWarnings("unchecked")
     protected void setCustomResources(DateTime dateTime, View backgroundView,
-                                      TextView textView) {
+                                      TextView textView, TextView underMsgTextView) {
         // Set custom background resource
         HashMap<DateTime, Integer> backgroundForDateTimeMap = (HashMap<DateTime, Integer>) caldroidData
                 .get(CaldroidFragment._BACKGROUND_FOR_DATETIME_MAP);
@@ -247,6 +247,19 @@ public class CaldroidGridAdapter extends BaseAdapter {
                 textView.setTextColor(resources.getColor(textColorResource));
             }
         }
+
+        HashMap<DateTime, String> underMsgForDateTimeMap = (HashMap<DateTime, String>) caldroidData
+                .get(CaldroidFragment._TEXT_MSG_UNDER_DATETIME_MAP);
+
+        if (underMsgForDateTimeMap != null)
+        {
+            String msg = underMsgForDateTimeMap.get(dateTime);
+            if (msg != null)
+            {
+                underMsgTextView.setVisibility(View.VISIBLE);
+                underMsgTextView.setText(msg);
+            }
+        }
     }
 
     private void resetCustomResources(CellView cellView) {
@@ -263,7 +276,10 @@ public class CaldroidGridAdapter extends BaseAdapter {
      * @param position
      * @param cellView
      */
-    protected void customizeTextView(int position, CellView cellView) {
+    protected void customizeTextView(int position, View cellRootView ) {
+        CellView cellView =(CellView) cellRootView.findViewById(R.id.calendar_tv);
+        TextView underMessageTextView = (TextView) cellRootView.findViewById(R.id.cell_under_msg_text_view);
+        underMessageTextView.setVisibility(View.GONE);
         // Get the padding of cell so that it can be restored later
         int topPadding = cellView.getPaddingTop();
         int leftPadding = cellView.getPaddingLeft();
@@ -305,7 +321,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
         cellView.setText("" + dateTime.getDay());
 
         // Set custom color if required
-        setCustomResources(dateTime, cellView, cellView);
+        setCustomResources(dateTime, cellView, cellView, underMessageTextView);
 
         // Somehow after setBackgroundResource, the padding collapse.
         // This is to recover the padding
@@ -346,7 +362,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
         else
             cellView = convertView;
 
-        customizeTextView(position,(CellView)cellView.findViewById(R.id.calendar_tv));
+        customizeTextView(position,cellView);
 
         return cellView;
     }

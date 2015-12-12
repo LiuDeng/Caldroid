@@ -11,6 +11,7 @@
         style="?styleCaldroidNormalCell"/>
 
     <TextView
+        android:id="@+id/cell_under_msg_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="123"
@@ -20,6 +21,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:padding="1dp"
+        android:visibility="gone"
         />
 
 </RelativeLayout>

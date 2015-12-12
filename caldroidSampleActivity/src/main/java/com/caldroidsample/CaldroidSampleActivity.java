@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import hirondelle.date4j.DateTime;
 
@@ -272,6 +273,10 @@ public class CaldroidSampleActivity extends AppCompatActivity {
         //mDialogCaldroidFragment.setDefaultDarkMode();
         mDialogCaldroidFragment.setMinDate(minDate);
         mDialogCaldroidFragment.setMaxDate(maxDate);
+        HashMap<Date,String> msgMap = new HashMap<>();
+        Date today = new Date();
+        msgMap.put(today,"2");
+        mDialogCaldroidFragment.setCellUnderMsgForDates(msgMap);
         mDialogCaldroidFragment.setSelectedDates(selectedDate, selectedDate);
         mDialogCaldroidFragment.show(getSupportFragmentManager(), "");
     }

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,13 +18,11 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.format.DateUtils;
 import android.text.format.Time;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -156,7 +153,8 @@ public class CaldroidFragment extends DialogFragment {
             _MIN_DATE_TIME = "_minDateTime",
             _MAX_DATE_TIME = "_maxDateTime",
             _BACKGROUND_FOR_DATETIME_MAP = "_backgroundForDateTimeMap",
-            _TEXT_COLOR_FOR_DATETIME_MAP = "_textColorForDateTimeMap";
+            _TEXT_COLOR_FOR_DATETIME_MAP = "_textColorForDateTimeMap",
+            _TEXT_MSG_UNDER_DATETIME_MAP = "_textMsgUnderForDateTimeMap";
 
     /**
      * Initial data
@@ -190,6 +188,8 @@ public class CaldroidFragment extends DialogFragment {
      */
     protected HashMap<DateTime, Integer> textColorForDateTimeMap = new HashMap<DateTime, Integer>();
     ;
+
+    protected HashMap<DateTime, String> underMsgForDateTimeMap = new HashMap<DateTime, String>();
 
     /**
      * First column of calendar is Sunday
@@ -357,6 +357,8 @@ public class CaldroidFragment extends DialogFragment {
                 .put(_BACKGROUND_FOR_DATETIME_MAP, backgroundForDateTimeMap);
         caldroidData.put(_TEXT_COLOR_FOR_DATETIME_MAP, textColorForDateTimeMap);
 
+        caldroidData.put(_TEXT_MSG_UNDER_DATETIME_MAP, underMsgForDateTimeMap);
+
         return caldroidData;
     }
 
@@ -454,6 +456,19 @@ public class CaldroidFragment extends DialogFragment {
             Integer resource = textColorForDateMap.get(date);
             DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
             textColorForDateTimeMap.put(dateTime, resource);
+        }
+    }
+
+    public void setCellUnderMsgForDates(HashMap<Date, String> underMsgForDateMap) {
+        textColorForDateTimeMap.clear();
+        if (underMsgForDateMap == null || underMsgForDateMap.size() == 0) {
+            return;
+        }
+
+        for (Date date : underMsgForDateMap.keySet()) {
+            String msg = underMsgForDateMap.get(date);
+            DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
+            underMsgForDateTimeMap.put(dateTime, msg);
         }
     }
 

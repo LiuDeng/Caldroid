@@ -23,6 +23,8 @@
     <color name="caldroid_light_red">#FF4081</color>
     <color name="caldroid_select_back">#3F51B5</color>
 
+    <color name="title_back">#3F51B5</color>
+    <color name="title_back_dark">#303F9F</color>
     <color name="bg_showcase">#aa000000</color>
 
 </resources>

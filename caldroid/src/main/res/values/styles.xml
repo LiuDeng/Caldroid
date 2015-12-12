@@ -7,6 +7,7 @@
         <item name="styleCaldroidNormalCell">@style/CaldroidDefaultCell</item>
         <item name="styleCaldroidWeekdayView">@style/CaldroidDefaultWeekday</item>
         <item name="styleCellUnderCountColor">@color/text_secondary_black</item>
+        <item name="themePrimaryColor">@color/title_back</item>
     </style>
 
     <style name="CaldroidDefaultCalendarViewLayout">
@@ -65,6 +66,7 @@
         <item name="styleCaldroidNormalCell">@style/CaldroidDefaultDarkCell</item>
         <item name="styleCaldroidGridView">@style/CaldroidDefaultDarkGridView</item>
         <item name="styleCellUnderCountColor">@color/text_secondary_white</item>
+        <item name="themePrimaryColor">@color/title_back_dark</item>
     </style>
 
     <style name="CaldroidDefaultDarkCalendarViewLayout">
