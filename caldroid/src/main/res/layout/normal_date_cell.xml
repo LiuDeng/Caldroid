@@ -14,17 +14,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="123"
-        android:textSize="10sp"
-        android:textStyle="bold"
-        android:paddingLeft="2dp"
-        android:paddingRight="2dp"
+        android:textSize="@dimen/cell_under_count_size"
         android:gravity="center"
-        android:textColor="@color/caldroid_white"
-        android:background="@drawable/cell_badge_circle_back"
-        android:layout_alignParentTop="true"
-        android:visibility="gone"
-        android:layout_alignParentRight="true"
-
+        android:textColor="?styleCellUnderCountColor"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:padding="1dp"
         />
 
 </RelativeLayout>

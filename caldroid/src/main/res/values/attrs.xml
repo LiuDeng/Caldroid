@@ -6,7 +6,7 @@
     <attr name="styleCaldroidNormalCell" format="reference"/>
     <attr name="styleCaldroidGridView" format="reference"/>
     <attr name="styleCaldroidWeekdayView" format="reference"/>
-
+    <attr name="styleCellUnderCountColor" format="color"/>
     <!-- Custom states -->
     <declare-styleable name="DateState">
         <attr name="state_date_today" format="boolean"/>

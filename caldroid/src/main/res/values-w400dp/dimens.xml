@@ -1,6 +1,9 @@
 <resources>
-    <dimen name="calendar_view_pager_margin_right">-2dp</dimen>
+    <dimen name="calendar_view_pager_margin_right">18dp</dimen>
     <dimen name="sidebar_width_height">18dp</dimen>
     <dimen name="horizon_sidebar_padding">10sp</dimen>
     <dimen name="horizon_sidebar_top_padding">7sp</dimen>
+    <dimen name="date_cell_padding">20dp</dimen>
+    <dimen name="cell_text_size">16sp</dimen>
+    <dimen name="cell_under_count_size">10sp</dimen>
 </resources>

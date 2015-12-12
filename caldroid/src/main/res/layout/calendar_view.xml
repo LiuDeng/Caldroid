@@ -30,6 +30,7 @@
                 android:id="@+id/weekday_gridview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/sidebar_width_height"
                 android:numColumns="7"
                 android:stretchMode="columnWidth" >
             </GridView>
@@ -42,6 +43,7 @@
             android:layout_height="wrap_content"
             >
 
+
             <com.antonyt.infiniteviewpager.InfiniteViewPager
                 android:id="@+id/months_infinite_pager"
                 android:layout_width="match_parent"
@@ -52,11 +54,15 @@
                 android:id="@+id/month_sidebar"
                 android:layout_width="@dimen/sidebar_width_height"
                 android:layout_height="match_parent"
-                android:background="@android:color/white"
+                android:background="@color/caldroid_transparent"
                 android:layout_alignTop="@id/months_infinite_pager"
                 android:layout_alignBottom="@id/months_infinite_pager"
                 android:layout_alignParentRight="true"
                 android:clickable="true" />
+
+
+
+
 
         </RelativeLayout>
 
