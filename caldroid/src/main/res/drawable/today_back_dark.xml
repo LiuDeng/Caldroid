@@ -13,10 +13,10 @@
     </item>
 
     <item
-        android:bottom="2dp"
-        android:left="6dp"
-        android:right="6dp"
-        android:top="2dp">
+        android:bottom="@dimen/cell_top_bottom_back_padding"
+        android:left="@dimen/cell_left_right_back__padding"
+        android:right="@dimen/cell_left_right_back__padding"
+        android:top="@dimen/cell_top_bottom_back_padding">
         <shape android:shape="oval" >
 
             <solid android:color="@color/caldroid_light_red" />

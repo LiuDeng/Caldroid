@@ -6,4 +6,7 @@
     <dimen name="date_cell_padding">20dp</dimen>
     <dimen name="cell_text_size">16sp</dimen>
     <dimen name="cell_under_count_size">10sp</dimen>
+
+    <dimen name="cell_top_bottom_back_padding">3dp</dimen>
+    <dimen name="cell_left_right_back__padding">6dp</dimen>
 </resources>
