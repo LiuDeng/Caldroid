@@ -24,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
@@ -125,6 +126,7 @@ public class CaldroidFragment extends DialogFragment {
     private InfiniteViewPager dateViewPager;
     private DatePageChangeListener pageChangeListener;
     private ArrayList<DateGridFragment> fragments;
+    private ProgressBar loadingProgressbar;
 
     private int themeResource = R.style.CaldroidDefault;
     private boolean isLightMode = true;
@@ -1023,6 +1025,16 @@ public class CaldroidFragment extends DialogFragment {
         monthTitleTextView.setText(monthTitle.toUpperCase(Locale.getDefault()));
     }
 
+    public void beginLoadingProgress()
+    {
+        loadingProgressbar.setVisibility(View.VISIBLE);
+    }
+
+    public void endLoadingProgress()
+    {
+        loadingProgressbar.setVisibility(View.GONE);
+    }
+
     /**
      * Refresh view when parameter changes. You should always change all
      * parameters first, then call this method.
@@ -1305,7 +1317,7 @@ public class CaldroidFragment extends DialogFragment {
         monthTitleTextView = (TextView) view
                 .findViewById(R.id.calendar_month_year_textview);
 
-
+        loadingProgressbar = (ProgressBar)view.findViewById(R.id.progressBar);
         // For the weekday gridview ("SUN, MON, TUE, WED, THU, FRI, SAT")
         weekdayGridView = (GridView) view.findViewById(R.id.weekday_gridview);
         WeekdayArrayAdapter weekdaysAdapter = getNewWeekdayAdapter(themeResource);
