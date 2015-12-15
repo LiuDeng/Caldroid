@@ -21,10 +21,14 @@
     <color name="caldroid_333">#333</color>
     <color name="caldroid_555">#555</color>
     <color name="caldroid_light_red">#FF4081</color>
-    <color name="caldroid_select_back">#3F51B5</color>
 
-    <color name="title_back">#3F51B5</color>
-    <color name="title_back_dark">#303F9F</color>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
+
+    <color name="caldroid_select_back">@color/colorPrimary</color>
+
+    <color name="title_back">@color/colorPrimary</color>
+    <color name="title_back_dark">@color/colorPrimaryDark</color>
     <color name="bg_showcase">#aa000000</color>
 
 </resources>
