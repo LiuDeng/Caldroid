@@ -48,7 +48,7 @@ public class HorizonSidebar extends View{
 	public HorizonSidebar(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
-        fontSizeInPx = context.getResources().getDimensionPixelSize(R.dimen.sidebar_width_height);
+        fontSizeInPx = context.getResources().getDimensionPixelSize(R.dimen.cell_text_size);
         textPadding = context.getResources().getDimensionPixelSize(R.dimen.horizon_sidebar_padding);
         textTopPadding = context.getResources().getDimensionPixelSize(R.dimen.horizon_sidebar_top_padding);
         init(true);

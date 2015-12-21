@@ -57,7 +57,7 @@ public class Sidebar extends View{
 	public Sidebar(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
-        fontSizeInPx = context.getResources().getDimensionPixelSize(R.dimen.sidebar_width_height);
+        fontSizeInPx = context.getResources().getDimensionPixelSize(R.dimen.cell_text_size);
         init(true);
 	}
 

@@ -2,6 +2,7 @@ package com.caldroidsample;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -245,6 +246,13 @@ public class CaldroidSampleActivity extends AppCompatActivity {
             @Override
             public void onCaldroidViewCreated() {
                 super.onCaldroidViewCreated();
+                mDialogCaldroidFragment.beginLoadingProgress();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDialogCaldroidFragment.endLoadingProgress();
+                    }
+                },3000);
             }
         };
         Date selectedDate = new Date();
@@ -270,6 +278,9 @@ public class CaldroidSampleActivity extends AppCompatActivity {
 
         Date minDate = new Date(2000-1900,1,1);
         Date maxDate = selectedDate;
+
+
+
         //mDialogCaldroidFragment.setDefaultDarkMode();
         mDialogCaldroidFragment.setMinDate(minDate);
         mDialogCaldroidFragment.setMaxDate(maxDate);
@@ -277,7 +288,7 @@ public class CaldroidSampleActivity extends AppCompatActivity {
         Date today = new Date();
         msgMap.put(today,"2");
         mDialogCaldroidFragment.setCellUnderMsgForDates(msgMap);
-        mDialogCaldroidFragment.setSelectedDates(selectedDate, selectedDate);
+        mDialogCaldroidFragment.setSelectedDate(new Date());
         mDialogCaldroidFragment.show(getSupportFragmentManager(), "");
     }
     /**
