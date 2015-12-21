@@ -27,6 +27,7 @@ public class HorizonSidebar extends View{
     private int fontSizeInPx = 10;
     private int textPadding = 5;
     private int textTopPadding = 0;
+    private Integer pressBack  = R.drawable.sidebar_background_pressed_light;
     public void initBar(SideBarSelectListener sectionIndexer, String[] sections ,boolean isLightMode)
     {
         this.sectionIndexer = sectionIndexer;
@@ -64,6 +65,7 @@ public class HorizonSidebar extends View{
         else
         {
             paint.setColor(getResources().getColor(R.color.text_secondary_white));
+            pressBack = R.drawable.sidebar_background_pressed_dark;
         }
         paint.setTextAlign(Align.CENTER);
         paint.setTextSize(fontSizeInPx);
@@ -115,7 +117,7 @@ public class HorizonSidebar extends View{
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:{
 			setHeaderTextAndScroll(event);
-			setBackgroundResource(R.drawable.sidebar_background_pressed);
+			setBackgroundResource(pressBack);
 			return true;
 		}
 		case MotionEvent.ACTION_MOVE:{

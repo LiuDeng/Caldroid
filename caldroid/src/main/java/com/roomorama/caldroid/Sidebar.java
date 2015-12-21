@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -26,7 +25,7 @@ public class Sidebar extends View{
     private String[] sections;
     private  SideBarSelectListener sectionIndexer;
     private int fontSizeInPx = 10;
-
+    private Integer pressBack  = R.drawable.sidebar_background_pressed_light;
     public void initBar(SideBarSelectListener sectionIndexer, String[] sections , boolean isLightMode)
     {
         this.sectionIndexer = sectionIndexer;
@@ -71,6 +70,7 @@ public class Sidebar extends View{
         else
         {
             paint.setColor(getResources().getColor(R.color.text_secondary_white));
+            pressBack = R.drawable.sidebar_background_pressed_dark;
         }
         paint.setTextAlign(Align.CENTER);
         paint.setTextSize(fontSizeInPx);
@@ -123,7 +123,7 @@ public class Sidebar extends View{
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:{
 			setHeaderTextAndScroll(event);
-			setBackgroundResource(R.drawable.sidebar_background_pressed);
+			setBackgroundResource(pressBack);
 			return true;
 		}
 		case MotionEvent.ACTION_MOVE:{

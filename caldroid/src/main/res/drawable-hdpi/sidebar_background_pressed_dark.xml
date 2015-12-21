@@ -3,6 +3,6 @@
 
     <corners android:radius="0dp" />
 
-    <solid android:color="?attr/styleCellUnderCountColor" />
+    <solid android:color="@color/text_secondary_white" />
 
 </shape>
