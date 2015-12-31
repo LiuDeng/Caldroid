@@ -240,6 +240,8 @@ public class CaldroidFragment extends DialogFragment {
      */
     private CaldroidListener caldroidListener;
 
+    private Sidebar monthSiderBar;
+
     /**
      * Retrieve current month
      * @return
@@ -668,7 +670,7 @@ public class CaldroidFragment extends DialogFragment {
         if (caldroidListener != null) {
             caldroidListener.onChangeMonth(month, year);
         }
-
+        monthSiderBar.setSelectIndex(month - 1);
         refreshView();
     }
 
@@ -801,7 +803,7 @@ public class CaldroidFragment extends DialogFragment {
                 .getDateFromString(toDateString, dateFormat);
         setSelectedDates(fromDate, toDate);
     }
-    
+
     /**
      * Select single date
      * @author Alov Maxim <alovmax@yandex.ru>
@@ -813,7 +815,7 @@ public class CaldroidFragment extends DialogFragment {
         DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
         selectedDates.add(dateTime);
     }
-    
+
     /**
      * Clear selection of the specified date
      * @author Alov Maxim <alovmax@yandex.ru>
@@ -825,7 +827,7 @@ public class CaldroidFragment extends DialogFragment {
         DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
         selectedDates.remove(dateTime);
     }
-    
+
     /**
      * Checks whether the specified date is selected
      * @author Alov Maxim <alovmax@yandex.ru>
@@ -1283,6 +1285,7 @@ public class CaldroidFragment extends DialogFragment {
         int selectMonth = seletDateTime.getMonth();
         TextView siderBarSelectTextView = (TextView)view.findViewById(R.id.side_bar_select_text);
         Sidebar monthSidebar = (Sidebar)view.findViewById(R.id.month_sidebar);
+        monthSiderBar = monthSidebar;
         monthSidebar.initBar(new Sidebar.SideBarSelectListener() {
             @Override
             public void onSelectIndex(int index) {
@@ -1342,18 +1345,18 @@ public class CaldroidFragment extends DialogFragment {
         return view;
     }
 
-	@Override
-	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-		// Inform client that all views are created and not null
-		// Client should perform customization for buttons and textviews here
-		if (caldroidListener != null) {
-			caldroidListener.onCaldroidViewCreated();
-		}
-	}
+        // Inform client that all views are created and not null
+        // Client should perform customization for buttons and textviews here
+        if (caldroidListener != null) {
+            caldroidListener.onCaldroidViewCreated();
+        }
+    }
 
-	/**
+    /**
      * This method can be used to provide different gridview.
      *
      * @return

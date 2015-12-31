@@ -22,7 +22,7 @@ public class Sidebar extends View{
     }
     protected TextView selectHintTextView;
     protected int selectIndex = 1;
-	protected Paint paint;
+    protected Paint paint;
     protected Paint selectPaint;
     protected Context context;
     protected String[] sections;
@@ -49,6 +49,12 @@ public class Sidebar extends View{
         return (int)(dpValue * scale + 0.5f);
     }
 
+    public void setSelectIndex(int index)
+    {
+        selectIndex = index;
+        postInvalidate();
+    }
+
     /**
      * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
      */
@@ -58,12 +64,12 @@ public class Sidebar extends View{
         return (int)(pxValue / scale + 0.5f);
     }
 
-	public Sidebar(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		this.context = context;
+    public Sidebar(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        this.context = context;
         fontSizeInPx = context.getResources().getDimensionPixelSize(R.dimen.cell_text_size);
         init(true);
-	}
+    }
 
 
     void  init(boolean isLightMode)
@@ -84,10 +90,10 @@ public class Sidebar extends View{
         postInvalidate();
     }
 
-	
-	@Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
         if (sections == null || sections.length == 0 )
             return;
         float center = getWidth() / 2;
@@ -96,7 +102,7 @@ public class Sidebar extends View{
             canvas.drawText(sections[0], center, getHeight() / 2, paint);
             return;
         }
-		int height = (getHeight() - fontSizeInPx - fontSizeInPx /3) / (sections.length-1);
+        int height = (getHeight() - fontSizeInPx - fontSizeInPx /3) / (sections.length-1);
         for (int i=0; i< sections.length; i++)
         {
             int y = height * i;
@@ -108,55 +114,55 @@ public class Sidebar extends View{
             }
             canvas.drawText(sections[i], center,  y, drawePaint);
         }
-	}
+    }
 
 
-	protected int sectionForPoint(float y) {
+    protected int sectionForPoint(float y) {
         int height = getHeight() / (sections.length);
-		int index = (int) ((int)y / height);
-		if(index < 0) {
-			index = 0;
-		}
-		if(index > sections.length - 1){
-			index = sections.length - 1;
-		}
-		return index;
-	}
-	
-	protected void setHeaderTextAndScroll(MotionEvent event){
-		if (sectionIndexer == null) {
-		        return;
-	    }
+        int index = (int) ((int)y / height);
+        if(index < 0) {
+            index = 0;
+        }
+        if(index > sections.length - 1){
+            index = sections.length - 1;
+        }
+        return index;
+    }
+
+    protected void setHeaderTextAndScroll(MotionEvent event){
+        if (sectionIndexer == null) {
+            return;
+        }
         int index = sectionForPoint(event.getY());
         selectIndex = index;
         selectHintTextView.setText(sections[selectIndex]);
         sectionIndexer.onSelectIndex(index);
-	}
-	
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		switch (event.getAction()) {
-		case MotionEvent.ACTION_DOWN:{
-			setHeaderTextAndScroll(event);
-			setBackgroundResource(pressBack);
-            selectHintTextView.setVisibility(VISIBLE);
-			return true;
-		}
-		case MotionEvent.ACTION_MOVE:{
-			setHeaderTextAndScroll(event);
-            selectHintTextView.setVisibility(VISIBLE);
-			return true;
-		}
-		case MotionEvent.ACTION_UP:
-            selectHintTextView.setVisibility(GONE);
-			setBackgroundColor(Color.TRANSPARENT);
-			return true;
-		case MotionEvent.ACTION_CANCEL:
-            selectHintTextView.setVisibility(GONE);
-			setBackgroundColor(Color.TRANSPARENT);
-			return true;
-		}
-		return super.onTouchEvent(event);
-	}
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:{
+                setHeaderTextAndScroll(event);
+                setBackgroundResource(pressBack);
+                selectHintTextView.setVisibility(VISIBLE);
+                return true;
+            }
+            case MotionEvent.ACTION_MOVE:{
+                setHeaderTextAndScroll(event);
+                selectHintTextView.setVisibility(VISIBLE);
+                return true;
+            }
+            case MotionEvent.ACTION_UP:
+                selectHintTextView.setVisibility(GONE);
+                setBackgroundColor(Color.TRANSPARENT);
+                return true;
+            case MotionEvent.ACTION_CANCEL:
+                selectHintTextView.setVisibility(GONE);
+                setBackgroundColor(Color.TRANSPARENT);
+                return true;
+        }
+        return super.onTouchEvent(event);
+    }
 
 }
