@@ -9,6 +9,7 @@ import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.caldroid.R;
 
@@ -19,17 +20,21 @@ public class Sidebar extends View{
     {
         void onSelectIndex(int index);
     }
-
-	private Paint paint;
-	private Context context;
-    private String[] sections;
-    private  SideBarSelectListener sectionIndexer;
-    private int fontSizeInPx = 10;
-    private Integer pressBack  = R.drawable.sidebar_background_pressed_light;
-    public void initBar(SideBarSelectListener sectionIndexer, String[] sections , boolean isLightMode)
+    protected TextView selectHintTextView;
+    protected int selectIndex = 1;
+	protected Paint paint;
+    protected Paint selectPaint;
+    protected Context context;
+    protected String[] sections;
+    protected  SideBarSelectListener sectionIndexer;
+    protected int fontSizeInPx = 10;
+    protected Integer pressBack  = R.drawable.sidebar_background_pressed_light;
+    public void initBar(SideBarSelectListener sectionIndexer, String[] sections , boolean isLightMode, TextView selectHintTextView, int initSelectIndex)
     {
         this.sectionIndexer = sectionIndexer;
         this.sections =sections;
+        this.selectHintTextView = selectHintTextView;
+        this.selectIndex = initSelectIndex;
         init(isLightMode);
     }
 
@@ -74,6 +79,8 @@ public class Sidebar extends View{
         }
         paint.setTextAlign(Align.CENTER);
         paint.setTextSize(fontSizeInPx);
+        selectPaint = new Paint(paint);
+        selectPaint.setColor(getResources().getColor(R.color.colorPrimary));
         postInvalidate();
     }
 
@@ -94,11 +101,17 @@ public class Sidebar extends View{
         {
             int y = height * i;
             y+= fontSizeInPx;
-            canvas.drawText(sections[i], center,  y, paint);
+            Paint drawePaint = paint;
+            if (i == selectIndex)
+            {
+                drawePaint = selectPaint;
+            }
+            canvas.drawText(sections[i], center,  y, drawePaint);
         }
 	}
-	
-	private int sectionForPoint(float y) {
+
+
+	protected int sectionForPoint(float y) {
         int height = getHeight() / (sections.length);
 		int index = (int) ((int)y / height);
 		if(index < 0) {
@@ -110,11 +123,13 @@ public class Sidebar extends View{
 		return index;
 	}
 	
-	private void setHeaderTextAndScroll(MotionEvent event){
+	protected void setHeaderTextAndScroll(MotionEvent event){
 		if (sectionIndexer == null) {
 		        return;
 	    }
         int index = sectionForPoint(event.getY());
+        selectIndex = index;
+        selectHintTextView.setText(sections[selectIndex]);
         sectionIndexer.onSelectIndex(index);
 	}
 	
@@ -124,16 +139,20 @@ public class Sidebar extends View{
 		case MotionEvent.ACTION_DOWN:{
 			setHeaderTextAndScroll(event);
 			setBackgroundResource(pressBack);
+            selectHintTextView.setVisibility(VISIBLE);
 			return true;
 		}
 		case MotionEvent.ACTION_MOVE:{
 			setHeaderTextAndScroll(event);
+            selectHintTextView.setVisibility(VISIBLE);
 			return true;
 		}
 		case MotionEvent.ACTION_UP:
+            selectHintTextView.setVisibility(GONE);
 			setBackgroundColor(Color.TRANSPARENT);
 			return true;
 		case MotionEvent.ACTION_CANCEL:
+            selectHintTextView.setVisibility(GONE);
 			setBackgroundColor(Color.TRANSPARENT);
 			return true;
 		}

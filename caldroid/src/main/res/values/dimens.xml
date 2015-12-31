@@ -8,4 +8,6 @@
 
     <dimen name="cell_top_bottom_back_padding">3dp</dimen>
     <dimen name="cell_left_right_back__padding">4dp</dimen>
+    <dimen name="sidebar_hint_text_size">30sp</dimen>
+    <dimen name="sidebar_hint_background_size">45dp</dimen>
 </resources>

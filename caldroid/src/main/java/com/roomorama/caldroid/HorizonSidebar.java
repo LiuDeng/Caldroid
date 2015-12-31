@@ -13,38 +13,12 @@ import android.view.View;
 import com.caldroid.R;
 
 
-public class HorizonSidebar extends View{
+public class HorizonSidebar extends Sidebar{
 
-    public static interface   SideBarSelectListener
-    {
-        void onSelectIndex(int index);
-    }
 
-	private Paint paint;
-	private Context context;
-    private String[] sections;
-    private  SideBarSelectListener sectionIndexer;
-    private int fontSizeInPx = 10;
+
     private int textPadding = 5;
     private int textTopPadding = 0;
-    private Integer pressBack  = R.drawable.sidebar_background_pressed_light;
-    public void initBar(SideBarSelectListener sectionIndexer, String[] sections ,boolean isLightMode)
-    {
-        this.sectionIndexer = sectionIndexer;
-        this.sections =sections;
-        init(isLightMode);
-    }
-
-    public static int sp2px(Context context, float spValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (spValue * fontScale + 0.5f);
-    }
-
-    public static int dip2px(Context context, float dpValue)
-    {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int)(dpValue * scale + 0.5f);
-    }
 
 	public HorizonSidebar(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -54,28 +28,9 @@ public class HorizonSidebar extends View{
         textTopPadding = context.getResources().getDimensionPixelSize(R.dimen.horizon_sidebar_top_padding);
         init(true);
 	}
-
-
-    void  init(boolean isLightMode)
-    {
-        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        if (isLightMode) {
-            paint.setColor(getResources().getColor(R.color.text_diable_black));
-        }
-        else
-        {
-            paint.setColor(getResources().getColor(R.color.text_secondary_white));
-            pressBack = R.drawable.sidebar_background_pressed_dark;
-        }
-        paint.setTextAlign(Align.CENTER);
-        paint.setTextSize(fontSizeInPx);
-        postInvalidate();
-    }
-
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
         if (sections == null || sections.length == 0 )
             return;
         int y = getHeight() / 2 + textTopPadding;
@@ -88,11 +43,17 @@ public class HorizonSidebar extends View{
         {
             int x = width * i;
             x += textPadding;
-            canvas.drawText(sections[i], x,  y, paint);
+			Paint drawePaint = paint;
+			if (i == selectIndex)
+			{
+				drawePaint = selectPaint;
+			}
+            canvas.drawText(sections[i], x,  y, drawePaint);
         }
 	}
-	
-	private int sectionForPoint(float x) {
+
+	@Override
+	protected int sectionForPoint(float x) {
         int width = getWidth() / (sections.length);
 		int index = (int) ((int)x / width);
 		if(index < 0) {
@@ -103,12 +64,15 @@ public class HorizonSidebar extends View{
 		}
 		return index;
 	}
-	
-	private void setHeaderTextAndScroll(MotionEvent event){
+
+	@Override
+	protected void setHeaderTextAndScroll(MotionEvent event){
 		if (sectionIndexer == null) {
 		        return;
 	    }
         int index = sectionForPoint(event.getX());
+		selectIndex = index;
+		selectHintTextView.setText(sections[selectIndex]);
         sectionIndexer.onSelectIndex(index);
 	}
 	
@@ -118,17 +82,20 @@ public class HorizonSidebar extends View{
 		case MotionEvent.ACTION_DOWN:{
 			setHeaderTextAndScroll(event);
 			setBackgroundResource(pressBack);
+			selectHintTextView.setVisibility(VISIBLE);
 			return true;
 		}
 		case MotionEvent.ACTION_MOVE:{
 			setHeaderTextAndScroll(event);
+			selectHintTextView.setVisibility(VISIBLE);
 			return true;
 		}
 		case MotionEvent.ACTION_UP:
 			setBackgroundColor(Color.TRANSPARENT);
+			selectHintTextView.setVisibility(GONE);
 			return true;
 		case MotionEvent.ACTION_CANCEL:
-			setBackgroundColor(Color.TRANSPARENT);
+			selectHintTextView.setVisibility(GONE);
 			return true;
 		}
 		return super.onTouchEvent(event);

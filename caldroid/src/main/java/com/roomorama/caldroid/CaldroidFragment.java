@@ -31,6 +31,8 @@ import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
 import com.antonyt.infiniteviewpager.InfiniteViewPager;
 import com.caldroid.R;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -1277,13 +1279,16 @@ public class CaldroidFragment extends DialogFragment {
 
         }
 
+        DateTime seletDateTime = selectedDates.get(0);
+        int selectMonth = seletDateTime.getMonth();
+        TextView siderBarSelectTextView = (TextView)view.findViewById(R.id.side_bar_select_text);
         Sidebar monthSidebar = (Sidebar)view.findViewById(R.id.month_sidebar);
         monthSidebar.initBar(new Sidebar.SideBarSelectListener() {
             @Override
             public void onSelectIndex(int index) {
                 moveToDateTime(new DateTime(year, index + 1, 1, 0, 0, 0, 0));
             }
-        }, new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}, isLightMode);
+        }, new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}, isLightMode,siderBarSelectTextView, selectMonth - 1);
 
 
         if (minDateTime != null && maxDateTime != null)
@@ -1291,9 +1296,14 @@ public class CaldroidFragment extends DialogFragment {
             int yearBetween = maxDateTime.getYear() - minDateTime.getYear();
             final int yearIn = yearBetween > 12 ? 12:yearBetween;
             List<String> years = new ArrayList<String>();
+            int yearSelectIndex = 0;
             for (int i=1 ; i<=yearIn ;  i++)
             {
                 DateTime date = maxDateTime.minusDays(365 * (yearIn - i));
+                if (date.getYear().equals(seletDateTime.getYear()))
+                {
+                    yearSelectIndex =  i-1;
+                }
                 years.add(String.valueOf(date.getYear()).substring(2));
                 if (date.lteq(minDateTime))
                 {
@@ -1301,15 +1311,15 @@ public class CaldroidFragment extends DialogFragment {
                 }
             }
             if (years.size() > 1) {
-                HorizonSidebar yeahSidebar = (HorizonSidebar) view.findViewById(R.id.year_sidebar);
-                yeahSidebar.setVisibility(View.VISIBLE);
-                yeahSidebar.initBar(new HorizonSidebar.SideBarSelectListener() {
+                HorizonSidebar yearSideBar = (HorizonSidebar) view.findViewById(R.id.year_sidebar);
+                yearSideBar.setVisibility(View.VISIBLE);
+                yearSideBar.initBar(new HorizonSidebar.SideBarSelectListener() {
                     @Override
                     public void onSelectIndex(int index) {
                         DateTime date = maxDateTime.minusDays((yearIn-index - 1) * 365);
                         moveToDateTime(new DateTime(date.getYear(), month, 1, 0, 0, 0, 0));
                     }
-                }, years.toArray(new String[years.size()]),isLightMode);
+                }, years.toArray(new String[years.size()]),isLightMode,siderBarSelectTextView, yearSelectIndex);
             }
         }
 
